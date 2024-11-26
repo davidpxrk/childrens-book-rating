@@ -4,7 +4,7 @@
 # Date: November 26, 2024
 # Contact: hyunje.park@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
+# Pre-requisites: None
 
 #### Workspace setup ####
 library(tidyverse)
@@ -20,7 +20,8 @@ print(data)
 data$"rated_high" <- ifelse(data$rating > 4, 1, 0)
 
 # drop unnecessary columns 
-data <- data %>% select(-c(isbn, original_publish_year))
+data <- data %>% select(-c(author, isbn, original_publish_year))
 
 #### Save data in parquet file ####
 write_parquet(data, "data/analysis_data/analysis_data.parquet") 
+

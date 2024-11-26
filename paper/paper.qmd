@@ -20,8 +20,12 @@ bibliography: references.bib
 library(tidyverse)
 library(palmerpenguins)
 library(kableExtra)
+library(arrow)
+library(readr)
+library(rstanarm)
+library(modelsummary)
 
-data <- read.csv(here::here("data/analysis_data/analysis_data.csv"))
+data <- read_parquet(here::here("data/analysis_data/analysis_data.parquet"))
 print(data)
 ```
 
@@ -46,7 +50,7 @@ data %>% head(5)
 #| echo: false
 
 data %>% 
-  select(-c(title, author)) %>% 
+  select(-c(title)) %>% 
   summary(rated-high) %>% 
   kable(booktabs = TRUE, linesep = "") %>% 
   kable_styling(position = "left", bootstrap_options = "condensed", full_width = FALSE)
@@ -56,8 +60,6 @@ data %>%
 
 
 # Data {#sec-data}
-
-
 
 ```{r}
 #| label: summary_statistic_cleaned_dataset
@@ -120,8 +122,78 @@ ggplot(cover_counts, aes(x = cover, y = count, fill = cover)) +
 
 
 \newpage
+```{r}
+#| label: summary_statistic_cleaned_dataset
+#| fig-cap: "Summary Statistic of the Cleaned Dataset"
+#| echo: false
+
+model_file <- readRDS(file = here::here("models/model.rds"))
+
+modelsummary(
+  list (
+    "Book is High-Rated" = model_file
+  ),
+  statistic = "mad"
+)
+
+```
+
+```{r}
+#| label: summary_statistic_cleaned_dataset
+#| fig-cap: "Summary Statistic of the Cleaned Dataset"
+#| echo: false
+
+pp_check(model_file) +
+  theme(legend.position = "bottom")
 
 
+```
+
+```{r}
+#| label: summary_statistic_cleaned_dataset
+#| fig-cap: "Summary Statistic of the Cleaned Dataset"
+#| echo: false
+
+posterior_vs_prior(model_file, size = 0.3) +
+   theme_minimal() +
+   theme(legend.position = "bottom") +
+   theme(axis.text.x=element_text(hjust=1, vjust=0.5),
+         text=element_text(size=8)) +
+   coord_flip()
+
+```
+
+
+```{r}
+#| label: summary_statistic_cleaned_dataset
+#| fig-cap: "Summary Statistic of the Cleaned Dataset"
+#| echo: false
+#| fig-subcap: ["Intercept", "pages", "rating_count", "publish_year", "coverEbook", "coverKindle", "coverBoard", "coverHardcover", "coverPaperback"]
+#| layout-ncol: 3
+
+plot(model_file, "trace", "(Intercept)")
+plot(model_file, "trace", "pages")
+plot(model_file, "trace", "rating_count")
+plot(model_file, "trace", "publish_year")
+plot(model_file, "trace", "coverEbook")
+plot(model_file, "trace", "coverKindle Edition")
+plot(model_file, "trace", "coverBoard Book")
+plot(model_file, "trace", "coverHardcover")
+plot(model_file, "trace", "coverPaperback")
+
+
+```
+
+
+
+```{r}
+#| label: summary_statistic_cleaned_dataset
+#| fig-cap: "Summary Statistic of the Cleaned Dataset"
+#| echo: false
+
+plot(model_file, "rhat")
+
+```
 # References
 
 
