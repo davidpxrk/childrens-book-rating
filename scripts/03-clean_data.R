@@ -10,6 +10,8 @@
 #### Workspace setup ####
 library(tidyverse)
 library(dplyr)
+library(readr)
+library(arrow)
 
 #### Clean data ####
 data <- read.delim("data/01-raw_data/childrens-books.txt", header = TRUE, sep = "\t")
@@ -21,5 +23,5 @@ data$"rated_high" <- ifelse(data$rating > 4, 1, 0)
 # drop unnecessary columns 
 data <- data %>% select(-c(isbn, original_publish_year))
 
-#### Save data ####
-write_csv(data, "data/02-analysis_data/analysis_data.csv") 
+#### Save data in parquet file ####
+write_parquet(data, "data/02-analysis_data/analysis_data.parquet") 

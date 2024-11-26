@@ -64,8 +64,24 @@ data %>%
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
 #| echo: false
 
-ggplot(data, aes(x = publish_year, y = rating)) +
-  geom_point()
+
+data2 <- data %>% filter(rating > 4 )
+
+ggplot(data2, aes(x = publish_year, y = rating)) +
+  geom_point() +
+  theme_minimal()
+
+ggplot(data2, aes(x = rating_count, y = rating)) +
+  geom_point() 
+
+ggplot(data2, aes(x = pages, y = rating)) +
+  geom_point() 
+
+ggplot(data2, aes(y = cover)) + 
+  geom_bar() +
+  theme_minimal()
+
+
 ```
 
 
