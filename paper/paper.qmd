@@ -21,7 +21,7 @@ library(tidyverse)
 library(palmerpenguins)
 library(kableExtra)
 
-data <- read.csv(here::here("data/02-analysis_data/analysis_data.csv"))
+data <- read.csv(here::here("data/analysis_data/analysis_data.csv"))
 print(data)
 ```
 
@@ -71,15 +71,48 @@ ggplot(data2, aes(x = publish_year, y = rating)) +
   geom_point() +
   theme_minimal()
 
-ggplot(data2, aes(x = rating_count, y = rating)) +
-  geom_point() 
 
-ggplot(data2, aes(x = pages, y = rating)) +
-  geom_point() 
+ggplot(data2, aes(x = rating, y = rating_count)) +
+  geom_point() +
+  geom_smooth( se =FALSE, color = "red", size = 1)
+
+ggplot(data2, aes(x = rating, y = pages)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = 'red', size = 1)
 
 ggplot(data2, aes(y = cover)) + 
   geom_bar() +
   theme_minimal()
+
+
+avg_pages <- aggregate(pages ~ rated_high, data = data, FUN = mean, na.rm = TRUE)
+
+
+ggplot(avg_pages, aes(x = factor(rated_high), y = pages, fill = factor(rated_high))) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Average Pages by High Rated",
+    x = "High Rated (1 = Yes, 0 = No)",
+    y = "Average Pages",
+    fill = "High Rated"
+  ) +
+  theme_minimal()
+
+
+cover_counts <- data %>%
+  group_by(rated_high, cover) %>%
+  summarise(count = n()) %>%
+  ungroup()
+
+ggplot(cover_counts, aes(x = cover, y = count, fill = cover)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~ rated_high) +
+  labs(title = "Count of Hardcover and Paperback by Rated High",
+       x = "Cover Type",
+       y = "Count") +
+  theme_minimal()
+
+
 
 
 ```
