@@ -9,36 +9,17 @@
 
 #### Workspace setup ####
 library(tidyverse)
+library(dplyr)
 
 #### Clean data ####
-raw_data <- read_csv("inputs/data/plane_data.csv")
+data <- read.delim("data/01-raw_data/childrens-books.txt", header = TRUE, sep = "\t")
+print(data)
 
-cleaned_data <-
-  raw_data |>
-  janitor::clean_names() |>
-  select(wing_width_mm, wing_length_mm, flying_time_sec_first_timer) |>
-  filter(wing_width_mm != "caw") |>
-  mutate(
-    flying_time_sec_first_timer = if_else(flying_time_sec_first_timer == "1,35",
-                                   "1.35",
-                                   flying_time_sec_first_timer)
-  ) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "490",
-                                 "49",
-                                 wing_width_mm)) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "6",
-                                 "60",
-                                 wing_width_mm)) |>
-  mutate(
-    wing_width_mm = as.numeric(wing_width_mm),
-    wing_length_mm = as.numeric(wing_length_mm),
-    flying_time_sec_first_timer = as.numeric(flying_time_sec_first_timer)
-  ) |>
-  rename(flying_time = flying_time_sec_first_timer,
-         width = wing_width_mm,
-         length = wing_length_mm
-         ) |> 
-  tidyr::drop_na()
+# make a new column that determines if a book is high rated 
+data$"rated_high" <- ifelse(data$rating > 4, 1, 0)
+
+# drop unnecessary columns 
+data <- data %>% select(-c(isbn, original_publish_year))
 
 #### Save data ####
-write_csv(cleaned_data, "outputs/data/analysis_data.csv")
+write_csv(data, "data/02-analysis_data/analysis_data.csv") 
