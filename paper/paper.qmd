@@ -78,12 +78,26 @@ Data analysis is performed using statistical programming language , along with p
 #| warning: false
 
 # TABLE 1: CLEANED DATASET
-data %>% 
+first_half <- data %>% select(1:6)
+
+first_half %>% 
   head(5) %>%
   kable(booktabs = TRUE, linesep = "") %>%
-  kable_styling(position = "left", bootstrap_options = "condensed", full_width = FALSE)
+  kable_styling(bootstrap_options = "condensed", full_width = FALSE)
+```
 
+```{r}
+#| message: false
+#| echo: false
+#| warning: false
 
+# CONTINUTATION OF TABLE 1: CLEANED DATASET
+second_half <- data %>% select(7:12)
+
+second_half %>% 
+  head(5) %>%
+  kable(booktabs = TRUE, linesep = "") %>%
+  kable_styling(bootstrap_options = "condensed", full_width = FALSE)
 ```
 
 
@@ -92,9 +106,16 @@ data %>%
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
 #| echo: false
 
-data %>% 
-  select(-c(title)) %>% 
-  summary(rated-high) %>% 
+summary_table <- data %>%
+  filter(!is.na(rated_high)) %>%  
+  group_by(rated_high) %>%       
+  summarise(
+    avg_pages = mean(pages, na.rm = TRUE),          
+    avg_publish_year = mean(publish_year, na.rm = TRUE),
+    avg_rating_count = mean(rating_count, na.rm = TRUE)  
+  )
+
+summary_table %>% 
   kable(booktabs = TRUE, linesep = "") %>% 
   kable_styling(position = "left", bootstrap_options = "condensed", full_width = FALSE)
 
