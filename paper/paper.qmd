@@ -41,10 +41,24 @@ The logistic regression model showed that ___ The findings of this research have
 
 This research paper is structured as follows: (SECTION 2) contains an overview of the dataset and some tables and graphs used to illustrate the variables employed in this analysis. (SECTION 3) describes and justifies the logistic regression model that was produced in this report. (SECTION 4) highlights the result of the model, (SECTION 5) discusses some of the outcomes, weaknesses, and (SECTION APPENDIX) contains additional information on model details. 
 
-
 # Estimand
 
+The estimand of this paper is the probability that a book is highly-rated (has an average rating of over 4 on a 0-5 scale), based on book characteristics. It is difficult to measure the exact number as there are millions of children's books that are published and not all of them will be accessed due to various issues. For examples, children's books from different countries may have different ratings. Therefore in this paper, we attempt to estimate the estimand using a logistic regression model which is fitted using a sample from the Children's Book Rating dataset (CITATION)
+
+# Data
+
+Data analysis is performed using statistical programming language , along with packages 
+
+
+
+
+
+
+
 # Model
+
+
+
 
 # Results
 
@@ -63,6 +77,8 @@ This research paper is structured as follows: (SECTION 2) contains an overview o
 
 # TABLE 1: CLEANED DATASET
 data %>% head(5)
+
+data
 ```
 
 

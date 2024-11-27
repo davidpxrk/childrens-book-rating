@@ -14,6 +14,10 @@ library(rstanarm)
 #### Read data ####
 analysis_data <- read_parquet("data/analysis_data/analysis_data.parquet")
 
+analysis_reduced <- analysis_data |> 
+  slice_sample(n= 2500)
+  
+  
 ### Model data ####
 first_model <-
   stan_glm(
