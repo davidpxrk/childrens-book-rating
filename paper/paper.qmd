@@ -33,11 +33,11 @@ data <- read_parquet(here::here("data/analysis_data/analysis_data.parquet"))
 
 For generations, children's books have been a catalyst in children's development. Through captivating fairytales and fables of stories about adventures, heroes, magical forests and magic, children gain experiences on feelings and thoughts, learning to cope with inhibitions, vulnerability and shyness (CITATION). Beyond educational purposes, children's literature can positively influence mental wellbeing, feelings and behavior. Given these significant developmental benefits, it can be said that the quality of the children's book matters greatly; choosing a well-written book can affect how it nurtures the next generation of mature, emotionally resilient individuals. This is why book rating systems hold significant importance; allowing readers to rate books on a scale from 0-5 scale (most commonly used scale) helps parents and educators assess whether a book is worth giving to children.
 
-In this 0-5 rating system, a score of 4 or above is often seen as the benchmark for a "highly rated" book. This is influenced by central tendency bias, where people naturally gravitate towards a moderate score, avoiding extremes like 0 or 5 to appear more balanced and objective. A rating such as 4, in particular, suggests a strong endorsement without overstepping into exaggeration. Given this, a critical question arises; What factors of a book contribute to the likelihood of the book being "highly rated"?
+In this 0-5 rating system, a score of 4 or above is often seen as the benchmark for a "highly rated" book. This is influenced by central tendency bias, where people naturally gravitate towards a moderate score, avoiding extremes like 0 or 5 to appear more balanced and objective. A rating such as 4, in particular, suggests a strong endorsement without overstepping into exaggeration. Given this, a critical question arises; What factors of a book contribute to the likelihood of the book being "highly-rated" (a score above 4)?
 
-In this paper, I analyzed how the characteristics of a book, such as book type, page count, publishing year, and rating counts affected the likelihood of a book being "highly-rated", using the Children's Book Ratings Data (CITATION). First, after data cleaning, I selected 9 variables on children book characteristics for my analysis in (SECTION 2). Then, a logistic regression model was created to predict the probability of the book being "highly-rated", based on the chosen book characteristic variables. 
+In this paper, I analyzed how the characteristics of a book, such as book type, page count, publishing year, and rating counts affected the likelihood of a book being "highly-rated" using the Children's Book Ratings Data (CITATION). First, after data cleaning, I selected 9 variables on children book characteristics for my analysis in (SECTION 2). Then, a logistic regression model was created to predict the probability of the book being "highly-rated", based on the chosen book characteristic variables. 
 
-The logistic regression model showed that ___ The findings of this research have practical implications for the writing industry, to allow future generation authors to push the boundaries of literature.
+The logistic regression model showed that ___ .The findings of this research have practical implications for the writing industry, to allow future generation authors to push the boundaries of literature.
 
 This research paper is structured as follows: (SECTION 2) contains an overview of the dataset and some tables and graphs used to illustrate the variables employed in this analysis. (SECTION 3) describes and justifies the logistic regression model that was produced in this report. (SECTION 4) highlights the result of the model, (SECTION 5) discusses some of the outcomes, weaknesses, and (SECTION APPENDIX) contains additional information on model details. 
 
@@ -73,12 +73,17 @@ Data analysis is performed using statistical programming language , along with p
 ```{r}
 #| label: cleaned_dataset-preview
 #| fig-cap: "Preview of the Cleaned Dataset"
+#| message: false
 #| echo: false
+#| warning: false
 
 # TABLE 1: CLEANED DATASET
-data %>% head(5)
+data %>% 
+  head(5) %>%
+  kable(booktabs = TRUE, linesep = "") %>%
+  kable_styling(position = "left", bootstrap_options = "condensed", full_width = FALSE)
 
-data
+
 ```
 
 
@@ -160,26 +165,16 @@ ggplot(cover_counts, aes(x = cover, y = count, fill = cover)) +
 
 
 \newpage
-```{r}
-#| label: summary_statistic_cleaned_dataset3
-#| fig-cap: "Summary Statistic of the Cleaned Dataset"
-#| echo: false
 
-model_file <- readRDS(file = here::here("models/model.rds"))
-
-modelsummary(
-  list (
-    "Book is High-Rated" = model_file
-  ),
-  statistic = "mad"
-)
-
-```
 
 ```{r}
 #| label: summary_statistic_cleaned_dataset4
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
 #| echo: false
+
+# delete this later
+model_file <- readRDS(file = here::here("models/model.rds"))
+
 
 pp_check(model_file) +
   theme(legend.position = "bottom")
@@ -191,6 +186,8 @@ pp_check(model_file) +
 #| label: summary_statistic_cleaned_dataset5
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
 #| echo: false
+
+analysis_data <- read_parquet(here::here("data/analysis_data/analysis_data.parquet"))
 
 posterior_vs_prior(model_file, size = 0.3) +
    theme_minimal() +
@@ -232,6 +229,8 @@ plot(model_file, "trace", "coverPaperback")
 plot(model_file, "rhat")
 
 ```
+
+-->
 # References
 
 
