@@ -118,12 +118,37 @@ summary_table <- data %>%
 summary_table %>% 
   kable(booktabs = TRUE, linesep = "") %>% 
   kable_styling(position = "left", bootstrap_options = "condensed", full_width = FALSE)
-
-
 ```
 
 
 # Data {#sec-data}
+
+```{r}
+#| label: summary_statistic_cleaned_dataset125
+#| fig-cap: "Summary Statistic of the Cleaned Dataset"
+#| echo: false
+
+data2 <- data %>% filter(rating >= 4)
+data3 <- data %>% filter(rating < 4)
+data2 <- data2 %>% mutate(group = "High Rating (>= 4)")
+data3 <- data3 %>% mutate(group = "Low Rating (< 4)")
+
+# Combine the two datasets
+combined_data <- bind_rows(data2, data3)
+
+avg_publish_years <- combined_data %>%
+  group_by(group) %>%
+  summarise(avg_publish_year = mean(publish_year, na.rm = TRUE))
+
+# Create a combined scatter plot with facets
+ggplot(combined_data, aes(x = publish_year, y = rating)) +
+  geom_point() +
+  theme_minimal() +
+  facet_wrap(~group, ncol = 1, scales = "free_y") +
+  geom_vline(data = avg_publish_years, aes(xintercept = avg_publish_year), 
+             color = "red", linetype = "dashed", size = 1) 
+
+```
 
 ```{r}
 #| label: summary_statistic_cleaned_dataset2
@@ -131,7 +156,7 @@ summary_table %>%
 #| echo: false
 
 
-data2 <- data %>% filter(rating > 4 )
+data2 <- data %>% filter(rating >= 4)
 
 ggplot(data2, aes(x = publish_year, y = rating)) +
   geom_point() +
@@ -139,12 +164,11 @@ ggplot(data2, aes(x = publish_year, y = rating)) +
 
 
 ggplot(data2, aes(x = rating, y = rating_count)) +
-  geom_point() +
-  geom_smooth( se =FALSE, color = "red", size = 1)
+  geom_point() 
 
 ggplot(data2, aes(x = rating, y = pages)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE, color = 'red', size = 1)
+  geom_point() 
+
 
 ggplot(data2, aes(y = cover)) + 
   geom_bar() +
@@ -163,24 +187,6 @@ ggplot(avg_pages, aes(x = factor(rated_high), y = pages, fill = factor(rated_hig
     fill = "High Rated"
   ) +
   theme_minimal()
-
-
-cover_counts <- data %>%
-  group_by(rated_high, cover) %>%
-  summarise(count = n()) %>%
-  ungroup()
-
-ggplot(cover_counts, aes(x = cover, y = count, fill = cover)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  facet_wrap(~ rated_high) +
-  labs(title = "Count of Hardcover and Paperback by Rated High",
-       x = "Cover Type",
-       y = "Count") +
-  theme_minimal()
-
-
-
-
 ```
 
 
