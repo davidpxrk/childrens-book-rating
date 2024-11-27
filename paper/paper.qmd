@@ -3,10 +3,10 @@ title: "My title"
 subtitle: "My subtitle if needed"
 author: 
   - Hyunje Park
-thanks: "Code and data are available at: [https://github.com/davidpxrk/childrens-book-rating](https://github.com/davidpxrk/childrens-book-rating)."
+thanks: "Code and data are available at: [https://github.com/davidpxrk/childrens-book-rating](https://github.com/davidpxrk/childrens-book-rating). Special thanks to Rohan Alexander for his help!"
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This paper examines the rating of childrens' books using the . By using logistic regression and data from the Alex Cookson (CITATION), I analyzed the relationship between various characteristics of a childrens' book, and whether or not it influenced if the book had a high rating or not. The insight from this research not only clarify what makes a high rated childrens' book so high rated, but also enhance future authors to push the boundaries of their literature"
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -26,11 +26,23 @@ library(rstanarm)
 library(modelsummary)
 
 data <- read_parquet(here::here("data/analysis_data/analysis_data.parquet"))
-print(data)
 ```
 
 
 # Introduction
+
+
+## Estimand
+
+# Model
+
+# Results
+
+# Discussion
+
+# Appendix
+
+
 
 
 
@@ -62,7 +74,7 @@ data %>%
 # Data {#sec-data}
 
 ```{r}
-#| label: summary_statistic_cleaned_dataset
+#| label: summary_statistic_cleaned_dataset2
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
 #| echo: false
 
@@ -123,7 +135,7 @@ ggplot(cover_counts, aes(x = cover, y = count, fill = cover)) +
 
 \newpage
 ```{r}
-#| label: summary_statistic_cleaned_dataset
+#| label: summary_statistic_cleaned_dataset3
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
 #| echo: false
 
@@ -139,7 +151,7 @@ modelsummary(
 ```
 
 ```{r}
-#| label: summary_statistic_cleaned_dataset
+#| label: summary_statistic_cleaned_dataset4
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
 #| echo: false
 
@@ -150,7 +162,7 @@ pp_check(model_file) +
 ```
 
 ```{r}
-#| label: summary_statistic_cleaned_dataset
+#| label: summary_statistic_cleaned_dataset5
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
 #| echo: false
 
@@ -165,7 +177,7 @@ posterior_vs_prior(model_file, size = 0.3) +
 
 
 ```{r}
-#| label: summary_statistic_cleaned_dataset
+#| label: summary_statistic_cleaned_dataset6
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
 #| echo: false
 #| fig-subcap: ["Intercept", "pages", "rating_count", "publish_year", "coverEbook", "coverKindle", "coverBoard", "coverHardcover", "coverPaperback"]
@@ -187,7 +199,7 @@ plot(model_file, "trace", "coverPaperback")
 
 
 ```{r}
-#| label: summary_statistic_cleaned_dataset
+#| label: summary_statistic_cleaned_dataset7
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
 #| echo: false
 
