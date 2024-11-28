@@ -15,7 +15,7 @@ library(rstanarm)
 analysis_data <- read_parquet("data/analysis_data/analysis_data.parquet")
 
 analysis_reduced <- analysis_data |> 
-  slice_sample(n= 2500)
+  slice_sample(n = 7000)
   
   
 ### Model data ####
@@ -26,7 +26,7 @@ first_model <-
     family = binomial(link = 'logit'),
     prior = normal(location = 0, scale = 2.5, autoscale = TRUE),
     prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE),
-    seed = 853
+    seed = 529
   )
 
 
