@@ -411,7 +411,7 @@ plot(model_file, "rhat")
 ```
 
 ```{r}
-#| label: summary_statistic_cleaned_dataset7
+#| label: summary_statistic_cleaned_dataset72
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
 #| echo: false
 
