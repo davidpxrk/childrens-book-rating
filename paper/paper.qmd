@@ -349,6 +349,11 @@ pp_check(model_file) +
 
 ```
 
+
+## Comparison of the Posterior vs Prior
+
+In FIGURE BELOW (CITE) we compared the posterior with the prior, to examine how the estimates change once data is taken into account (CITE ALEXANDER). Most of the variables do not vary even after data was taken into account, showing that the observed data matches the expectations of a "highly-rated" book.
+
 ```{r}
 #| label: summary_statistic_cleaned_dataset5
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
@@ -388,7 +393,13 @@ plot(model_file, "trace", "coverPaperback")
 
 ```
 
+## Markov Chain Monte Carlo Convergence Check
 
+FIGURE X AND Y are the trace plot of the model and Rhat plot of the model respectively.
+
+The trace plot shows osciliating horizontal lines, with overlaps between chains, showing no signs of issues with the model.
+
+Similarly, the Rhat plot doesn't indicate any issues with the model, as all the values remain close to 1 (CITE ALENXANDER)
 
 ```{r}
 #| label: summary_statistic_cleaned_dataset7
