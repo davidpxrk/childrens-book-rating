@@ -6,7 +6,7 @@ author:
 thanks: "Code and data are available at: [https://github.com/davidpxrk/childrens-book-rating](https://github.com/davidpxrk/childrens-book-rating). Special thanks to Rohan Alexander for his help!"
 date: today
 date-format: long
-abstract: "This paper examines the rating of childrens' books using the . By using logistic regression and data from the Alex Cookson (CITATION), I analyzed the relationship between various characteristics of a childrens' book, and whether or not it influenced if the book had a high rating or not. The insight from this research not only clarify what makes a high rated childrens' book so high rated, but also enhance future authors to push the boundaries of their literature"
+abstract: "This paper examines the rating of childrens' books using the . By using a Bayesian logistic regression and data from the Alex Cookson (CITATION), I analyzed the relationship between various characteristics of a childrens' book, and whether or not it influenced if the book had a high rating or not. The insight from this research not only clarify what makes a high rated childrens' book so high rated, but also enhance future authors to push the boundaries of their literature."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -24,6 +24,17 @@ library(arrow)
 library(readr)
 library(rstanarm)
 library(modelsummary)
+
+
+library(tidyverse)
+library(here)
+library(rstanarm)
+library(modelsummary)
+library(ggplot2)
+library(knitr)
+
+
+
 
 data <- read_parquet(here::here("data/analysis_data/analysis_data.parquet"))
 ```
@@ -108,6 +119,8 @@ This analysis focuses on the following variables, with a focus on `rated_high` a
   - `Hardcover`: The book has a rigid protective cover.
   - `Paperback`: The book is has a thick paper cover.
 
+Table 2 (CITATION) shows a summary of detailed statistics about the cleaned dataset. It showed that books that were considered "high rated" had more pages on average than low rated books. Furthermore, high rated books were on average published 2 years before low rated books, around the year 2003. In addition to this, the amount of ratings high-rated books received far exceed low rated books, at about 4x. The most common type of book cover also turned out to be hard covers. These variables are key in the analysis, and are further shown in (CITE HERE)
+
 ```{r}
 #| label: summary_statistic_cleaned_dataset
 #| fig-cap: "Summary Statistic of the Cleaned Dataset"
@@ -128,7 +141,7 @@ summary_table %>%
   kable_styling(bootstrap_options = "condensed", full_width = FALSE)
 ```
 
-Table 2 (CITATION) shows a summary of detailed statistics about the cleaned dataset. It showed that books that were considered "high rated" had more pages on average than low rated books. Furthermore, high rated books were on average published 2 years before low rated books, around the year 2003. In addition to this, the amount of ratings high-rated books received far exceed low rated books, at about 4x. The most common type of book cover also turned out to be hard covers. These variables are key in the analysis, and are further shown in (CITE HERE)
+\newpage
 
 ## Data Analysis 
 
@@ -207,13 +220,47 @@ ggplot(data, aes(x = rating, y = rating_count)) +
 
 (FIGURE 5) shows the relationship between the rating of a book and the number of ratings it received. The red line indicates the cut-off for a book to be considered "highly-rated". It is apparent that books that are considered "highly_rated" (right of the red line) have far more ratings on average than low-rated books. 
 
+\newpage
 
 # Model {#sec-model}
 
+This study employed a Bayesian logistic regression model to analyze the relationship between Children's book's "highly-rated" status and the characteristic of the book. The model is as follows:
 
 
+\begin{align} 
+y_i|\pi_i &\sim \mbox{Bern}(\pi_i) \label{eq1} \\
+\mbox{logit}(\pi_i) &= \beta_0 + \beta_1 \times \mbox{pages$_i$} \\
+&\quad + \beta_2 \times \mbox{rating\_count$_i$} + \beta_3 \times \mbox{publish\_year$_i$} \\
+&\quad + \beta_4 \times \mbox{coverEbook$_i$} + \beta_5 \times \mbox{coverKindleEdition$_i$} \\
+&\quad + \beta_6 \times \mbox{coverBoardBook$_i$} + \beta_7 \times \mbox{coverHardcover$_i$} \\
+&\quad + \beta_8 \times \mbox{coverPaperback$_i$} \label{eq2} \\
+\beta_0 &\sim \mbox{Normal}(0, 2.5) \label{eq3} \\
+\beta_1 &\sim \mbox{Normal}(0, 2.5) \label{eq4} \\
+\beta_2 &\sim \mbox{Normal}(0, 2.5) \label{eq5}\\
+\beta_3 &\sim \mbox{Normal}(0, 2.5) \label{eq6}\\
+\beta_4 &\sim \mbox{Normal}(0, 2.5) \label{eq7}\\
+\beta_5 &\sim \mbox{Normal}(0, 2.5) \label{eq8}\\
+\beta_6 &\sim \mbox{Normal}(0, 2.5) \label{eq9}\\
+\beta_7 &\sim \mbox{Normal}(0, 2.5) \label{eq10}\\
+\beta_8 &\sim \mbox{Normal}(0, 2.5) \label{eq11}
+\end{align}
+
+
+
+## Prior Distribution
+
+The rstanarm package (CITATION) was used in order to run the regression model mentioned above. The default priors of the rstanarm package was used (CITATION). These default priors are designed to be weakly informative, meaning they provide enough information to regularize the model and prevent extreme estimates, while being flexible to let the data drive the inference. By default, priors for regression coefficients are centered around 0 with a standard deviation of 2.5, which is shown in equations (Equation LIST).
+
+## Model Justification
+
+The predictor variables shown in (LIST HERE) were chosen due to the number of studies regarding their influence on ratings of books. 
+
+More specifically, I expect that
 
 # Results {#sec-result}
+
+After running the regression model above, we receive the coefficient values showcased in Table X.
+
 
 # Discussion {#sec-discussion}
 
@@ -285,6 +332,8 @@ posterior_vs_prior(model_file, size = 0.3) +
 #| echo: false
 #| fig-subcap: ["Intercept", "pages", "rating_count", "publish_year", "coverEbook", "coverKindle", "coverBoard", "coverHardcover", "coverPaperback"]
 #| layout-ncol: 3
+
+model_file <- readRDS(file = here::here("models/model.rds"))
 
 plot(model_file, "trace", "(Intercept)")
 plot(model_file, "trace", "pages")
