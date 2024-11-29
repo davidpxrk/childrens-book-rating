@@ -7,7 +7,9 @@ thanks: "Code and data are available at: [https://github.com/davidpxrk/childrens
 date: today
 date-format: long
 abstract: "This paper examines the factors influencing the rating of children's books using the data from Alex Cookson (Cookson 2020). By using a Bayesian logistic regression, I analyzed how various book characteristics impact the likelihood of a book receiving a high rating. The results showed that the book's cover type had the biggest positive impact on the likelihood of a book being high-rated. The insight from this research not only clarify the key elements of high-rated children's books, but also enhance future authors to push the boundaries of their literature by exploring different writing choices to enhance reader engagement."
-format: pdf
+format:
+  pdf:
+    fig.pos: "H"
 toc: true
 number-sections: true
 bibliography: references.bib
@@ -60,7 +62,7 @@ Data analysis is performed using Statistical Programming Language R [@citeR] , a
 
 ## Data Cleaning
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: tbl-cleaned-dataset-preview
 #| tbl-cap: "Preview of the Cleaned Children's Book Dataset"
 #| message: false
@@ -76,7 +78,7 @@ first_half %>%
   kable_styling(bootstrap_options = "condensed", full_width = FALSE)
 ```
 
-```{r}
+```{r, fig.pos: "H"}
 #| message: false
 #| echo: false
 #| warning: false
@@ -116,9 +118,9 @@ This analysis focuses on the following variables, with a focus on `rated_high` a
 
 @tbl-summary-statistic shows a summary of detailed statistics about the cleaned dataset. It showed that books that were considered "high-rated" had more pages on average than "low-rated books". Furthermore, "high-rated" books were on average published 2 years before "low-rated" books, with publish year of 2005 and 2003 for the "low-rated" and "high-rated" books respectively. "High-rated" books also received far more ratings on average at 8,000 ratings, more than four times that of "low-rated" books at an average of 2000 reviews per book. Lastly, `Kindle Edition` covers had the highest proportion of high-rated books out of any other cover types (as well as low-rated books). These variables are key in the analysis, and are further mentioned in @sec-data. 
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: tbl-summary-statistic
-#| fig-cap: "Summary Statistic of the Cleaned Dataset"
+#| fig-cap: "Summary Statistic of the Dataset"
 #| echo: false
 #| warning: false
 
@@ -146,7 +148,7 @@ summary_table %>%
 
 ## Data Analysis 
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: fig-most-common-covers
 #| fig-cap: "Proportion of High-rated Books by Cover Type"
 #| echo: false
@@ -187,7 +189,7 @@ ggplot(cover_proportions, aes(x = high_rated_pct, y = reorder(cover, high_rated_
 
 @fig-most-common-covers shows the proportion of "high-rated" books for each cover type. `Kindle Edition` books had the highest proportions of "high-rated" books at 77.8%, followed by Paperback and Ebook, at 64.7% and 61.3% respectively. This illustrates that generally, digitally formatted books had higher proportions of "high-rated" books compared to physical formats. This finding also reflects the result from @tbl-summary-statistic.
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: fig-page-count
 #| fig-cap: "Average Page Counts of High-rated and Low-rated Books"
 #| echo: false
@@ -209,7 +211,7 @@ ggplot(avg_pages, aes(x = factor(rated_high), y = pages, fill = factor(rated_hig
 
 @fig-page-count shows that "high-rated" books have more page count than "low-rated" books. Highly-rated books had an average page count of 66.1, compared to the 57.6 average page count of low-rated books.
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: fig-publish-year
 #| fig-cap: "Number of Books by Publish Year and Rating Status"
 #| echo: false
@@ -256,7 +258,7 @@ ggplot(data_combined, aes(x = as.factor(publish_year))) +
   
 @fig-publish-year shows the relationship between a book's rating and the publish year. The horizontal axis shows the publish year, and vertical axis shows the rating of the book. The graph is split into two vertically, the top plot showing ratings of high-rated books and low-rated books. It showed a left-tail distribution, peaking around the mid 2010s, followed by a big drop in late 2010s. High-rated books had a lower average publish year than low-rated books, at 2003 and 2005 respectively.
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: fig-rating-count
 #| fig-cap: "Rating Counts by the Rating of the Book"
 #| echo: false
@@ -320,7 +322,7 @@ With this in mind, we can see that, the Kindle Edition cover type had the highes
 
 Although the publish year was not statistically significant according to the @fig-interval, it exhibited a slight negative relationship (coefficient -0.01), consistent with previous findings from @fig-publish-year that "high-rated" books tend to have earlier publication years compared to "low-rated" ones.
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: tbl-book-model
 #| tbl-cap: "Modeling the likelihood of a book being High-rated"
 #| echo: false
@@ -373,7 +375,7 @@ Future research should aim to collect more representative data, potentially incl
 
 We used a posterior predictive check in @fig-distribution to evaluate how well the model fits the data. This compares the observed data `y` against the replicated data \mbox{y$_i$} which was generated by our model in @sec-model. The posterior distribution fitting perfectly suggests that the Bayesian logistic regression model is a good model fit.
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: fig-distribution
 #| fig-cap: "Posterior predictive check"
 #| echo: false
@@ -389,7 +391,7 @@ pp_check(model_file) +
 
 In @fig-post-prior we compared the posterior with the prior, to examine how the estimates change once data is taken into account [@citealexander]. Most of the variables do not vary even after data was taken into account, showing that the observed data matches the expectations of a "high-rated" book.
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: fig-post-prior
 #| fig-cap: "Comparison of the prior and posterior"
 #| echo: false
@@ -408,8 +410,9 @@ posterior_vs_prior(model_file, size = 0.3) +
 
 ```
 
+\newpage
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: fig-trace
 #| fig-cap: "Trace plot"
 #| echo: false
@@ -437,7 +440,7 @@ plot(model_file, "trace", "coverPaperback")
 
 @fig-trace and @fig-rhat are the trace plot of the model and Rhat plot of the model respectively. The trace plot shows oscillating horizontal lines, with overlaps between chains, showing no signs of issues with the model. Similarly, the Rhat plot doesn't indicate any issues with the model, as all the values remain close to 1 [@citealexander]
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: fig-rhat
 #| fig-cap: "Rhat Plot"
 #| echo: false
@@ -448,7 +451,7 @@ plot(model_file, "rhat")
 
 ```
 
-```{r}
+```{r,  fig.pos: "H"}
 #| label: fig-interval
 #| fig-cap: "90% Credibility Intervals for Predictors of High-rated Books"
 #| echo: false
