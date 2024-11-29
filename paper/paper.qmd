@@ -386,6 +386,7 @@ model_file <- readRDS(file = here::here("models/model.rds"))
 
 pp_check(model_file) +
   theme(legend.position = "bottom")
+
 ```
 
 ## Comparison of the Posterior vs Prior
