@@ -28,4 +28,5 @@ data <- data %>% select(-c(title, publisher, author, isbn, original_publish_year
 
 #### Save data in parquet file ####
 write_parquet(data, "data/analysis_data/analysis_data.parquet") 
+write_csv(data, "data/analysis_data/analysis_data.csv")
 
