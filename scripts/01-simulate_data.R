@@ -5,9 +5,7 @@
 # Date: 26 September 2024
 # Contact: rohan.alexander@utoronto.ca
 # License: MIT
-# Pre-requisites: The `tidyverse` package must be installed
-# Any other information needed? Make sure you are in the `starter_folder` rproj
-
+# Pre-requisites: Install the packages mentioned below
 
 #### Workspace setup ####
 library(tidyverse)

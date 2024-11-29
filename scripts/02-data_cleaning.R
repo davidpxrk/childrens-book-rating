@@ -26,7 +26,9 @@ data$"rated_high" <- ifelse(data$rating > 4, 1, 0)
 # drop unnecessary columns 
 data <- data %>% select(-c(title, publisher, author, isbn, original_publish_year))
 
-#### Save data in parquet file ####
+#### Save data in parquet file, used for paper.qmd ####
 write_parquet(data, "data/analysis_data/analysis_data.parquet") 
+
+# save as csv, for test_analysis_data.R
 write_csv(data, "data/analysis_data/analysis_data.csv")
 
