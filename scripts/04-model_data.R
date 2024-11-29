@@ -4,11 +4,13 @@
 # Date: November 26, 2024
 # Contact: hyunje.park@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: 02-data_cleaning.R
+# Pre-requisites: Run 02-data_cleaning.R for the parquet file
 
 #### Workspace setup ####
 library(tidyverse)
 library(rstanarm)
+library(lintr)
+library(styler)
 
 #### Read data ####
 analysis_data <- read_parquet("data/analysis_data/analysis_data.parquet")
@@ -35,4 +37,6 @@ saveRDS(
   file = "models/model.rds"
 )
 
-
+# lint and style the code
+lint(filename = here::here("scripts/04-model_data.R"))
+style_file(path = here::here("scripts/04-model_data.R"))

@@ -32,3 +32,6 @@ write_parquet(data, "data/analysis_data/analysis_data.parquet")
 # save as csv, for test_analysis_data.R
 write_csv(data, "data/analysis_data/analysis_data.csv")
 
+# lint and style the code
+lint(filename = here::here("scripts/02-data_cleaning.R"))
+style_file(path = here::here("scripts/02-data_cleaning.R"))
