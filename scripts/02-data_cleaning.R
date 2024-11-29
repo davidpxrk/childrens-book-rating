@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Cleans the children'sbook data
+# Purpose: Cleans the children's book data
 # Author: Hyunje Park 
 # Date: November 26, 2024
 # Contact: hyunje.park@mail.utoronto.ca
@@ -24,4 +24,3 @@ data <- data %>% select(-c(title, publisher, author, isbn, original_publish_year
 
 #### Save data in parquet file ####
 write_parquet(data, "data/analysis_data/analysis_data.parquet") 
-

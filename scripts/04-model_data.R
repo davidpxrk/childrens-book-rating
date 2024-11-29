@@ -1,11 +1,10 @@
 #### Preamble ####
-# Purpose: Models... [...UPDATE THIS...]
+# Purpose: Models whether or not a book is high-rated based on book characteristics
 # Author: Hyunje Park
 # Date: November 26, 2024
 # Contact: hyunje.park@mail.utoronto.ca
 # License: MIT
-# Pre-requisites:
-
+# Pre-requisites: 02-data_cleaning.R
 
 #### Workspace setup ####
 library(tidyverse)
