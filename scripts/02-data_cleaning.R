@@ -16,6 +16,10 @@ library(arrow)
 data <- read.delim("data/raw_data/childrens-books.txt", header = TRUE, sep = "\t")
 print(data)
 
+#remove any NA value entries
+data <- na.omit(data)
+
+
 # make a new column that determines if a book is high rated 
 data$"rated_high" <- ifelse(data$rating > 4, 1, 0)
 
@@ -24,3 +28,4 @@ data <- data %>% select(-c(title, publisher, author, isbn, original_publish_year
 
 #### Save data in parquet file ####
 write_parquet(data, "data/analysis_data/analysis_data.parquet") 
+
