@@ -52,6 +52,6 @@ print("Cover Proportions:")
 print(cover_proportions)
 
 
-#### lint and style the code nicely ####
+#### lint and style the code ####
 lint(filename = here('scripts/00-simulate_data.R'))
 style_file(path = here("scripts/00-simulate_data.R"))

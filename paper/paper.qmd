@@ -32,6 +32,9 @@ library(here)
 library(ggplot2)
 library(knitr)
 library(scales)
+library(testthat)
+library(lintr)
+library(styler)
 
 data <- read_parquet(here::here("data/analysis_data/analysis_data.parquet"))
 
@@ -59,7 +62,7 @@ The estimand of this paper is the probability that a children's book is "highly-
 
 The dataset used in this paper was obtained from Cookson [@citedata]. Cookson's dataset contained over 9,000 records of children's books that contained information of books such as title, author, ratings, publisher and more. In the initial step, data cleaning was performed and relevant variables were selected. First, entries with missing information were filtered out, and variables that were irrelevant to this study were also removed, which included variables such as book title. Then, a new variable called `rated_high` was created, which was a binary variable indicating if the book had a rating over 4 (1 if it exceeded 4, 0 else). After cleaning and creating this new variable, there were 9240 entries in the cleaned dataset. 
 
-Data analysis is performed using Statistical Programming Language R [@citeR] , along with packages `tidyverse` [@citetidyverse], `palmerpenguins` [@citepalmerpenguins], `kableExtra` [@citekableextra], `arrow` [@citearrow], `readr` [@citereadr], `rstanarm` [@citerstanarm], `modelsummary` [@citemodelsummary], `dplyr` [@citedplyr], `here` [@citehere], `ggplot2` [@citeggplot2], `knitr` [@citeknitr], `scales` [@citescales].
+Data analysis is performed using Statistical Programming Language R [@citeR] , along with packages `tidyverse` [@citetidyverse], `palmerpenguins` [@citepalmerpenguins], `kableExtra` [@citekableextra], `arrow` [@citearrow], `readr` [@citereadr], `rstanarm` [@citerstanarm], `modelsummary` [@citemodelsummary], `dplyr` [@citedplyr], `here` [@citehere], `ggplot2` [@citeggplot2], `knitr` [@citeknitr], `scales` [@citescales] and `testthat` [@testthat]. The code involved in the analysis was styled using `lintr` [@citelintr] and `styler` [@citestyler].
 
 ## Data Cleaning
 
