@@ -9,6 +9,8 @@
 
 #### Workspace setup ####
 library(tidyverse)
+library(lintr)
+library(styler)
 library(testthat)
 model_file <- readRDS(file = here::here("models/model.rds"))
 

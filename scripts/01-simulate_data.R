@@ -1,9 +1,8 @@
 #### Preamble ####
-# Purpose: Simulates a dataset of Australian electoral divisions, including the 
-  #state and party that won each division.
-# Author: Rohan Alexander
-# Date: 26 September 2024
-# Contact: rohan.alexander@utoronto.ca
+# Purpose: Simulates the Children's Book Data
+# Author: Hyunje Park
+# Date: 29 November 2024
+# Contact: hyunje.park@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: Install the packages mentioned below
 

@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Cleans the children's book data
+# Purpose: Cleans the Children's book data
 # Author: Hyunje Park 
 # Date: November 26, 2024
 # Contact: hyunje.park@mail.utoronto.ca
@@ -11,6 +11,8 @@ library(tidyverse)
 library(dplyr)
 library(readr)
 library(arrow)
+library(lintr)
+library(styler)
 
 #### Clean data ####
 data <- read.delim("data/raw_data/childrens-books.txt", header = TRUE, sep = "\t")

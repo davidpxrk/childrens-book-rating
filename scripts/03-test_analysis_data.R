@@ -1,16 +1,17 @@
 #### Preamble ####
-# Purpose: Tests... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 26 September 2024 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Tests the cleaned Children's book data
+# Author: Hyunje Park
+# Date: November 29 2024
+# Contact: hyunje.park@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: Run 02-data_cleaning.R to get the cleaned data
 
 
 #### Workspace setup ####
 library(tidyverse)
 library(testthat)
+library(lintr)
+library(styler)
 
 analysis_data <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
 
